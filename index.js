@@ -1,14 +1,14 @@
+const cron = require("node-cron");
 const GenerateData = require("./modules/generator");
 const PublishData = require("./modules/publisher");
 
-try{
-    setInterval(()=>{
+try {
+    cron.schedule("* * * * *", () => {
         let msg = GenerateData();
-        if(msg){
+        if (msg) {
             PublishData(msg);
         }
-    }, 1000 * 30);
-
-}catch(err){
-    console.log(`Error : `, err);
+    });
+} catch (err) {
+    console.error("Error:", err);
 }
